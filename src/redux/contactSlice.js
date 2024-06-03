@@ -1,14 +1,16 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
-import { initialContactsState } from './constants'
+import { loadState } from './editLocalstore';
+
+
+const persistedState = loadState();
 
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: initialContactsState,
+  initialState: persistedState,
   reducers: {
     addContact: {
       reducer(state, action) {
         const { name, number } = action.payload;
-        console.log(name, number);
         const isExist = state.contacts.some(
           contact => contact.name.toLowerCase() === name.trim().toLowerCase()
         );
@@ -16,6 +18,7 @@ const contactsSlice = createSlice({
           alert(`${name} is already in contacts!`);
         } else {
           state.contacts.push({ id: nanoid(), name, number });
+          localStorage.setItem("contacts", JSON.stringify(state.contacts));
         }
       },
       prepare(name, number) {
@@ -31,6 +34,7 @@ const contactsSlice = createSlice({
     deleteContact(state, action) {
       const index = state.contacts.findIndex(contact => contact.id === action.payload);
       state.contacts.splice(index, 1);
+      localStorage.setItem("contacts", JSON.stringify(state.contacts));
     },
     filterContact(state, action) {
       state.filter=action.payload;
@@ -39,7 +43,5 @@ const contactsSlice = createSlice({
   },
 });
 
-// export const { addContact, deleteContact} = contactsSlice.actions;
-// export const contactsReducer=contactsSlice.reducer;
 export const { addContact, deleteContact, filterContact} = contactsSlice.actions;
 export const contactsReducer=contactsSlice.reducer;

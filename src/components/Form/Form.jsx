@@ -7,8 +7,6 @@ export const Form = () => {
   const dispatch = useDispatch();
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
-    console.log(document.getElementById("nameContact").value);
     dispatch(addContact(document.getElementById("nameContact").value, document.getElementById("numberContact").value))
     document.getElementById("nameContact").value = '';
     document.getElementById("numberContact").value = '';
