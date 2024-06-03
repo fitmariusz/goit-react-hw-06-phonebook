@@ -1,8 +1,4 @@
-.contener{
-    display: flex;
-    flex-direction: column;
-    margin: 0 50px;
-}
+
 .ul{display: flex;
     list-style: none;
     /* margin: auto; */
@@ -10,11 +6,7 @@
 flex-direction: column;
 }
 
-.input{
-    display: flex;
-    color: aquamarine;
-    background-color: black;
-}
+
 
 .li{
     

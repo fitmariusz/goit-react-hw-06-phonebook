@@ -1,81 +1,73 @@
 import './App.css'
-import {  useEffect, useState } from "react";
-import { nanoid } from 'nanoid';
-import { ContactList } from './ContactsList/ContactsList';
-import { Form } from './Form/Form';
-import { Section } from './Section/Section';
+// import {  useEffect, useState } from "react";
+// import { nanoid } from 'nanoid';
+// import { ContactList } from './ContactsList/ContactsList';
+// import { Form } from './Form/Form';
+// import { Section } from './Section/Section';
+// import { useDispatch, useSelector } from 'react-redux';
+import { getContacts } from '../redux/selectors';
+// import { deleteContact } from '../redux/contactSlice';
+// import { store } from '../redux/store';
+// import { addContact } from '../redux/actions';
+import { ContactsSection } from './ContactsSection/ContactSecrion';
+import { PhoneBook } from './PhoneBook/PhoneBook';
 
 const INITCONTACTS = {
   contacts: [],
   filter: '',
-  name: '',
-  number:'',
 }
 
 export const App = () => {
+  // const dispatch = useDispatch();
+  // const dataPhonebook = useSelector(getContacts);
+  // console.log(dataPhonebookRedux);
+
   const getData = () => {
     const initialValue = JSON.parse(localStorage.getItem("contacts"));
     
       return (initialValue ? initialValue : INITCONTACTS);
   };
-  useEffect(() => {
+  // useEffect(() => {
     
-    console.log(getData());
-  }, []);
+  //   console.log(getData());
+  //   store.contacts=getData();
+  // }, []);
 
-const [dataPhonebook, setDataPhonebook] = useState(getData());
+// const [dataPhonebookRedux, setDataPhonebook] = useState(getData());
 
 
-  const setData = () => {
-    localStorage.setItem("contacts", JSON.stringify(dataPhonebook));
-  };
+  // const setData = () => {
+    // localStorage.setItem("contacts", JSON.stringify(dataPhonebookRedux));
+  // };
 
   
 
-  const onChange = (event) => {
-    const { name, value } = event.target;
-    setDataPhonebook({...dataPhonebook,[name]: value })
-   };
+  // const onChange = (event) => {
+    // const { name, value } = event.target;
+  //   setDataPhonebook({...dataPhonebook,[name]: value })
+  //  };
     
-  const onSubmit = (event) => {
-    const { name, number, contacts} = dataPhonebook;
-    event.preventDefault();
-    document.getElementById("nameContact").value = '';
-    document.getElementById("numberContact").value = '';
+  // const onSubmit = (event) => {
 
-const isExist = contacts.some(
-      contact => contact.name.toLowerCase() === name.trim().toLowerCase()
-    );
-    if (isExist) {
-      alert(`${name} is in contacts`);
-      return;
-    }
+    // dispatch(addContact('test', '256354'));
+   
+//   };
 
-    setDataPhonebook({
-      ...dataPhonebook,
-      contacts: [...contacts, { id: nanoid(), name, number }],
-      filter:'',
-      name: '',
-      number: ''
-    });
-    console.log(dataPhonebook)
-    
-  };
-
-setData();
-  const onDelete = (contactId) => {
-    setDataPhonebook({
-      ...dataPhonebook,
-      contacts: dataPhonebook.contacts.filter(contact => contact.id !== contactId)
-    });
-  };
+// setData();
+  // const onDelete = (contactId) => {
+  //   // setDataPhonebook({
+  //   //   ...dataPhonebook,
+  //   //   contacts: dataPhonebook.contacts.filter(contact => contact.id !== contactId)
+  //   // });
+  //   dispatch(deleteContact(contactId));
+  // };
     
   return (
     <>
       <div className='divForm'> 
-      <Section title="Phonebook" children={<Form dataPhonebook={dataPhonebook} onSubmit={onSubmit} onChange={onChange}></Form>}></Section>
-        <Section title="Contacts" children={<ContactList dataPhonebook={dataPhonebook} onDelete={onDelete} onChange={onChange}></ContactList>}></Section>
-        </div>
+        <PhoneBook/>
+        <ContactsSection/>
+      </div>
     </>
   );
 };

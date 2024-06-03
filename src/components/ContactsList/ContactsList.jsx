@@ -1,22 +1,25 @@
+import { useDispatch, useSelector } from "react-redux";
 import { searchContact } from "../Search/Search";
 import css from "./ContactsList.module.css"
+import { getContacts } from "../../redux/selectors";
+import { deleteContact } from "../../redux/contactSlice";
 
-
-
-export const ContactList = ({ dataPhonebook, onDelete, onChange }) => { 
+export const ContactList = () => { 
+  const dispatch = useDispatch();
+  const dataPhonebook = useSelector(getContacts)
+  const onDelete = (Id) => { 
+    dispatch(deleteContact(Id));
+  };
   return (<>
-    <div className={css.contener}>
-      <input className={css.input} type="search" name="filter" onChange={onChange} placeholder='Search'></input>
+    
     <ul className={css.ul}>
           {searchContact(dataPhonebook.contacts, dataPhonebook.filter).length !== 0 ? 
-            //  <li className={css.li}><span>Name</span><span>Number</span><span>      </span></li>
             searchContact(dataPhonebook.contacts, dataPhonebook.filter).map(contact =>
               <li className={css.li} key={contact.id}><span className={css.span}>{contact.name}</span><span className={css.span} >{contact.number}</span>
                 <button className={css.button} onClick={() => onDelete(contact.id)} required>Delete</button></li>)
             :
           <p>No contacts....</p>}
       </ul>
-      </div>
     </>);
 };
 
