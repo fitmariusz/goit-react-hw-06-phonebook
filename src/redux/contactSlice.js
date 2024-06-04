@@ -18,7 +18,7 @@ const contactsSlice = createSlice({
           alert(`${name} is already in contacts!`);
         } else {
           state.contacts.push({ id: nanoid(), name, number });
-          localStorage.setItem("contacts", JSON.stringify(state.contacts));
+          localStorage.setItem("contactsRedux", JSON.stringify(state.contacts));
         }
       },
       prepare(name, number) {
